@@ -9,6 +9,54 @@ package recipe;
  *
  * @author user
  */
-public class Recipe {
+import java.util.LinkedList; 
+
+public class Recipe implements RecipeInterface{
     
+    private String title;
+    private Picture recipePicture;
+    private Instructions instructions;
+    private Summary summary;
+    private LinkedList<Ingredient> ingredients;
+    
+    public Recipe(){
+        recipePicture = new Picture();
+        instructions = new Instructions();
+        summary = new Summary();
+    }
+    
+    public void setTitle(String title){
+        this.title = title;
+    }
+    
+    public String getTitle(){
+        return this.title;
+    }
+    
+    public Picture getRecipePicture(){
+        return recipePicture;
+    }
+    
+    public Instructions getRecipeInstructions(){
+        return instructions;
+    }
+    
+    public Summary getRecipeSummary(){
+        return summary;
+    }
+    
+    public LinkedList<Ingredient> getIngredients(){
+        return ingredients;
+    }
+    
+    /*
+    need to check validity of number
+    */
+    public void removeIngredient(int number) throws InvalidIndex{
+        if(number < 1){
+            throw new InvalidIndex();
+        }
+        
+        ingredients.remove(number-1);
+    }
 }

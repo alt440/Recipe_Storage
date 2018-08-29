@@ -9,9 +9,8 @@ package recipe;
  *
  * @author user
  */
-import java.util.LinkedList;
-
-public interface RecipeInterface {
-    public void setTitle(String title);
-    public String getTitle();    
+public class InvalidIndex extends Exception{
+    public InvalidIndex(){
+        System.err.println("Invalid index inputted.");
+    }
 }

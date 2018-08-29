@@ -9,6 +9,20 @@ package recipe;
  *
  * @author user
  */
+import java.util.LinkedList;
+/*
+This way of inputting information needs to be modified. Not efficient.
+*/
+
+
 public class Summary {
+    private LinkedList<String> summary = new LinkedList<>();
     
+    public void modifySummary(LinkedList<String> newSummary){
+        this.summary = newSummary;
+    }
+    
+    public LinkedList<String> getSummary(){
+        return this.summary;
+    }
 }

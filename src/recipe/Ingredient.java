@@ -14,7 +14,13 @@ public class Ingredient extends Recipe{
     private double quantity;
     private String unitOfMeasure;
     
-    public void setIngredient(String ingredient, String unitOfMeasure, double quantity){
+    public Ingredient(String ingredient, double quantity, String unitOfMeasure){
+        this.nameIngredient = ingredient;
+        this.unitOfMeasure = unitOfMeasure;
+        this.quantity = quantity;
+    }
+    
+    public void setIngredient(String ingredient, double quantity, String unitOfMeasure){
         this.nameIngredient = ingredient;
         this.unitOfMeasure = unitOfMeasure;
         this.quantity = quantity;

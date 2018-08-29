@@ -53,7 +53,7 @@ public class Recipe implements RecipeInterface{
     need to check validity of number
     */
     public void removeIngredient(int number) throws InvalidIndex{
-        if(number < 1){
+        if(number < 1 || number > ingredients.size()){
             throw new InvalidIndex();
         }
         

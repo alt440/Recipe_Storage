@@ -6,12 +6,18 @@
 package recipe;
 
 /**
- *
+ * This class is used to handle the picture (if any) associated with the recipe.
+ * It handles the URI to know the path to the picture and renames the picture
+ * to better associate the pictures with the right recipe.
  * @author user
  */
+/*
+Find the way to actually rename the picture.
+*/
 public class Picture {
     
-    private String URI;//the URI includes the name of the file and its extension
+    private String URI = ".\\src\\recipe_storage\\Pictures";//the URI includes the name of the file and its extension
+    private String name = "";
     
     public String getPictureURI(){
         return this.URI;
@@ -26,5 +32,10 @@ public class Picture {
         Renames the picture to the title of the recipe .jpg to associate the 
         picture to the recipe.
         */
+        this.name = "\\"+titleRecipe+".jpg";
+    }
+    
+    public String toString(){
+        return "Picture full URI: "+URI+name+"\n";
     }
 }

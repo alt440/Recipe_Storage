@@ -66,4 +66,14 @@ public class Instructions {
         instructions.remove(number-1);
     }
     
+    public String toString(){
+        String allInstructions = "";
+        for(int i=0;i< instructions.size();i++){
+            allInstructions+=i+". "+instructions.get(i)+"\n";
+        }
+        if(instructions.size()==0)
+            return "Instructions: No instructions.\n";
+        
+        return "Instructions: \n"+allInstructions;
+    }
 }

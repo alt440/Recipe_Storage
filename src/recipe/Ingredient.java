@@ -50,5 +50,7 @@ public class Ingredient extends Recipe{
         return unitOfMeasure;
     }
     
-    
+    public String toString(){
+        return nameIngredient+" Quantity: "+quantity+" "+unitOfMeasure+"\n";
+    }
 }

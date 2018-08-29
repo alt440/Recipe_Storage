@@ -17,7 +17,7 @@ access the data fields methods of each object of the recipe class.
 */
 
 public class RecipeBuilder {
-    private Recipe recipeToBuild;
+    private Recipe recipeToBuild = new Recipe();
     
     public Recipe getRecipe(){
         return recipeToBuild;
@@ -105,5 +105,9 @@ public class RecipeBuilder {
     
     public void removeIngredient(int number) throws InvalidIndex{
         recipeToBuild.removeIngredient(number);
+    }
+    
+    public String toString(){
+        return recipeToBuild.toString();
     }
 }

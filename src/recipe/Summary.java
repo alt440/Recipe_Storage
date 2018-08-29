@@ -25,4 +25,15 @@ public class Summary {
     public LinkedList<String> getSummary(){
         return this.summary;
     }
+    
+    public String toString(){
+        String allSummary = "";
+        for (int i=0;i<summary.size();i++){
+            allSummary+= summary.get(i)+"\n";
+        }
+        if(summary.size()==0)
+            return "Summary: No Summary";
+        
+        return "Summary: \n"+allSummary+"\n";
+    }
 }

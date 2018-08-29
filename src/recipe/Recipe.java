@@ -17,7 +17,7 @@ public class Recipe implements RecipeInterface{
     private Picture recipePicture;
     private Instructions instructions;
     private Summary summary;
-    private LinkedList<Ingredient> ingredients;
+    private LinkedList<Ingredient> ingredients = new LinkedList<>();
     
     public Recipe(){
         recipePicture = new Picture();
@@ -58,5 +58,17 @@ public class Recipe implements RecipeInterface{
         }
         
         ingredients.remove(number-1);
+    }
+    
+    public String toString(){
+        String allIngredients = "";
+        for (int i=0;i<ingredients.size();i++){
+            allIngredients+=ingredients.get(i).toString();
+        }
+        if(ingredients.size()==0)
+            allIngredients = "No ingredients";
+        
+        return "Title: "+title+"\n"+recipePicture.toString()+summary.toString()+
+                instructions.toString()+"Ingredients: \n"+allIngredients;
     }
 }

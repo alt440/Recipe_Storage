@@ -1,0 +1,9 @@
+Put loading gif when searching for ingredients starting with characters indicated
+If I can use autocomplete I will. Otherwise, put the options under the search bar.
+I cannot crawl the internet for recipes, so this application will be more about
+storing personal recipes. 
+For each recipe, I think about having a picture of the plate, summary, list of 
+ingredients, and instructions.
+I think about storing recipes as JSON objects to get used to JSON.
+It would be good to look at design patterns to get used to them. I have already
+used the singleton in AllIngredients and FridgeIngredients classes.

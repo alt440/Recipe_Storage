@@ -27,12 +27,20 @@ public class Picture {
         this.URI = URI;
     }
     
-    public void renamePicture(String titleRecipe){
+    public String getName(){
+        return this.name;
+    }
+    
+    public void setName(String titleRecipe){
         /*
         Renames the picture to the title of the recipe .jpg to associate the 
         picture to the recipe.
         */
         this.name = "\\"+titleRecipe+".jpg";
+    }
+    
+    public String getPictureFullURI(){
+        return this.URI+this.name;
     }
     
     public String toString(){

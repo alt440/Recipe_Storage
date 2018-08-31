@@ -61,7 +61,7 @@ public class JSONBuild {
       if(!isTitleValid(recipe.getTitle()))
           throw new UniqueTitleException();
         
-      System.out.println("Reach here?");
+      
       GsonBuilder builder = new GsonBuilder(); 
       Gson gson = builder.create(); 
       FileWriter writer = new FileWriter(pathToJson+recipe.getTitle()+".json");   

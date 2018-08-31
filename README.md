@@ -1,6 +1,8 @@
 # Recipe_Storage
 Tool to store recipes and search for recipes having particular ingredients
 
+This project has the purpose to make me practice the common design patterns as well as the use of JSON.
+
 # License
 
 The Gson software does not belong to me. Here is the license pertaining to the Gson software copied from Gson's Github page.

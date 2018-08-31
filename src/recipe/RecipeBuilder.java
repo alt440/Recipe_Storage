@@ -11,6 +11,9 @@ package recipe;
  */
 
 import java.util.LinkedList;
+import java.io.IOException;
+import java.io.FileNotFoundException;
+
 /*
 This class is used to more easily build the recipes. In other words, to more easily
 access the data fields methods of each object of the recipe class.
@@ -105,6 +108,41 @@ public class RecipeBuilder {
     
     public void removeIngredient(int number) throws InvalidIndex{
         recipeToBuild.removeIngredient(number);
+    }
+    
+    public void writeRecipeJson() throws IOException, EmptyTitleException{
+        JSONBuild.writeJSON(recipeToBuild);
+    }
+    
+    public Recipe readRecipeJson() throws FileNotFoundException, InvalidIndex{
+        Recipe recipe = JSONBuild.readJSON(this.getTitle());
+        
+        //Ingredients
+        this.recipeToBuild.clearIngredients();
+        
+        for(int i=0;i<recipe.getIngredients().size();i++){
+            this.addIngredient(recipe.getIngredients().get(i).getIngredientName(),
+                    recipe.getIngredients().get(i).getIngredientQuantity(),
+                    recipe.getIngredients().get(i).getIngredientUnitMeasure());
+        }
+        
+        //Picture
+        this.setPictureURI(recipe.getRecipePicture().getPictureURI());
+        this.setNamePicture(recipe.getTitle());
+        
+        //Instructions
+        this.recipeToBuild.clearRecipeInstructions();
+        
+        for(int i=0;i<recipe.getRecipeInstructions().getInstructions().size();i++){
+            this.addInstruction(i+1, recipe.getRecipeInstructions().getInstructions().get(i));
+        }
+        
+        //Summary
+        this.recipeToBuild.clearRecipeSummary();
+        
+        this.addSummary(recipe.getRecipeSummary().getSummary());
+        
+        return recipeToBuild;
     }
     
     public String toString(){

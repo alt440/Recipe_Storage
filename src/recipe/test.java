@@ -10,6 +10,7 @@ package recipe;
  * @author user
  */
 import java.util.LinkedList;
+import java.io.IOException;
 
 public class test {
     public static void main(String[] args){
@@ -31,10 +32,28 @@ public class test {
         summary.add("Just like you are awesome.");
         firstRecipe.addSummary(summary);
         
-        String titleRecipe = "TheABmix";
         firstRecipe.setTitle("The AB mix");
-        firstRecipe.setNamePicture(titleRecipe);
+        firstRecipe.setNamePicture("The AB mix");
         
         System.out.println(firstRecipe.toString());
+        
+        try{
+            firstRecipe.writeRecipeJson();
+        }
+        catch(IOException ex){
+            ex.printStackTrace();
+        }
+        catch(EmptyTitleException ex){
+        }
+        try{
+            firstRecipe.readRecipeJson();
+            System.out.println("\n"+firstRecipe.toString());
+        }
+        catch(IOException ex){
+            
+        }
+        catch(InvalidIndex ex){
+            ex.printStackTrace();
+        }
     }
 }

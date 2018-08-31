@@ -33,7 +33,7 @@ public class test {
         
         String titleRecipe = "TheABmix";
         firstRecipe.setTitle("The AB mix");
-        firstRecipe.setName(titleRecipe);
+        firstRecipe.setNamePicture(titleRecipe);
         
         System.out.println(firstRecipe.toString());
     }

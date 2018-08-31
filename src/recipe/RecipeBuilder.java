@@ -50,7 +50,7 @@ public class RecipeBuilder {
     Method below not accessible to users. Only used for organization of
     the application.
     */
-    public void renamePicture(String titleRecipe){
+    public void setNamePicture(String titleRecipe){
         recipeToBuild.getRecipePicture().setName(titleRecipe);
     }
     

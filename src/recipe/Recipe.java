@@ -41,12 +41,24 @@ public class Recipe implements RecipeInterface{
         return instructions;
     }
     
+    public void clearRecipeInstructions(){
+        instructions.clearInstructions();
+    }
+    
     public Summary getRecipeSummary(){
         return summary;
     }
     
+    public void clearRecipeSummary(){
+        summary.clearSummary();
+    }
+    
     public LinkedList<Ingredient> getIngredients(){
         return ingredients;
+    }
+    
+    public void clearIngredients(){
+        ingredients.clear();
     }
     
     /*
@@ -68,7 +80,7 @@ public class Recipe implements RecipeInterface{
         if(ingredients.size()==0)
             allIngredients = "No ingredients";
         
-        return "Title: "+title+"\n"+recipePicture.toString()+summary.toString()+
-                instructions.toString()+"Ingredients: \n"+allIngredients;
+        return "Title: "+title+"\n\n"+recipePicture.toString()+"\n"+summary.toString()+
+                instructions.toString()+"\nIngredients: \n"+allIngredients;
     }
 }

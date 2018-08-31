@@ -51,7 +51,7 @@ public class RecipeBuilder {
     the application.
     */
     public void renamePicture(String titleRecipe){
-        recipeToBuild.getRecipePicture().renamePicture(titleRecipe);
+        recipeToBuild.getRecipePicture().setName(titleRecipe);
     }
     
     public Instructions getInstructions(){

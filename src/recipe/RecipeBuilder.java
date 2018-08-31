@@ -110,10 +110,13 @@ public class RecipeBuilder {
         recipeToBuild.removeIngredient(number);
     }
     
-    public void writeRecipeJson() throws IOException, EmptyTitleException{
+    public void writeRecipeJson() throws IOException, EmptyTitleException, UniqueTitleException{
         JSONBuild.writeJSON(recipeToBuild);
     }
     
+    /*
+    Making a deep copy of the Recipe object received from JSON.
+    */
     public Recipe readRecipeJson() throws FileNotFoundException, InvalidIndex{
         Recipe recipe = JSONBuild.readJSON(this.getTitle());
         

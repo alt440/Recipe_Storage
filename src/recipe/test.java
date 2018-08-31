@@ -44,13 +44,17 @@ public class test {
             ex.printStackTrace();
         }
         catch(EmptyTitleException ex){
+            ex.printStackTrace();
+        }
+        catch(UniqueTitleException ex){
+            ex.printStackTrace();
         }
         try{
             firstRecipe.readRecipeJson();
             System.out.println("\n"+firstRecipe.toString());
         }
         catch(IOException ex){
-            
+            ex.printStackTrace();
         }
         catch(InvalidIndex ex){
             ex.printStackTrace();

@@ -1,6 +1,8 @@
 # Recipe_Storage
 Tool to store recipes and search for recipes having particular ingredients
 
+This project has the purpose to make me practice the common design patterns as well as the use of JSON and the Java Security Manager.
+I have noticed that serialization may not be the best thing to do because many security issues arise. I will have to find a way around it.
 
 # License
 

@@ -20,7 +20,7 @@ public class test {
         
         try{
             firstRecipe.addInstruction(1, "Get out a");
-            firstRecipe.addInstruction(2, "FUCK OFF");
+            firstRecipe.addInstruction(2, "FUDGE OFF");
         }
         catch(InvalidIndex ex){
             
@@ -33,9 +33,8 @@ public class test {
         
         String titleRecipe = "TheABmix";
         firstRecipe.setTitle("The AB mix");
-        firstRecipe.renamePicture(titleRecipe);
+        firstRecipe.setName(titleRecipe);
         
         System.out.println(firstRecipe.toString());
-        
     }
 }

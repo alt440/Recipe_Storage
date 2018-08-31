@@ -66,6 +66,14 @@ public class Instructions {
         instructions.remove(number-1);
     }
     
+    public LinkedList<String> getInstructions(){
+        return instructions;
+    }
+    
+    public void clearInstructions(){
+        instructions.clear();
+    }
+    
     public String toString(){
         String allInstructions = "";
         for(int i=0;i< instructions.size();i++){

@@ -26,6 +26,10 @@ public class Summary {
         return this.summary;
     }
     
+    public void clearSummary(){
+        summary.clear();
+    }
+    
     public String toString(){
         String allSummary = "";
         for (int i=0;i<summary.size();i++){

@@ -13,6 +13,7 @@ package recipe;
 import java.util.LinkedList;
 import java.io.IOException;
 import java.io.FileNotFoundException;
+import java.io.File;
 
 /*
 This class is used to more easily build the recipes. In other words, to more easily
@@ -53,8 +54,8 @@ public class RecipeBuilder {
     Method below not accessible to users. Only used for organization of
     the application.
     */
-    public void setNamePicture(String titleRecipe){
-        recipeToBuild.getRecipePicture().setName(titleRecipe);
+    public void setNamePicture(String titleRecipe, File picture){
+        recipeToBuild.getRecipePicture().setName(titleRecipe, picture);
     }
     
     public Instructions getInstructions(){
@@ -131,7 +132,7 @@ public class RecipeBuilder {
         
         //Picture
         this.setPictureURI(recipe.getRecipePicture().getPictureURI());
-        this.setNamePicture(recipe.getTitle());
+        this.setNamePicture(recipe.getTitle(), new File(recipe.getRecipePicture().getPictureURI()+"\\"+recipe.getTitle()+".jpg"));
         
         //Instructions
         this.recipeToBuild.clearRecipeInstructions();

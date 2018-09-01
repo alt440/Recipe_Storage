@@ -11,6 +11,7 @@ package recipe;
  */
 import java.util.LinkedList;
 import java.io.IOException;
+import java.io.File;
 
 public class test {
     public static void main(String[] args){
@@ -33,7 +34,9 @@ public class test {
         firstRecipe.addSummary(summary);
         
         firstRecipe.setTitle("The AB mix");
-        firstRecipe.setNamePicture("The AB mix");
+        
+        //must add the emplacement of the picture
+        firstRecipe.setNamePicture("The AB mix", new File(firstRecipe.getPictureURI()+"\\someImg.jpg"));
         
         System.out.println(firstRecipe.toString());
         

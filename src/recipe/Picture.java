@@ -11,6 +11,8 @@ package recipe;
  * to better associate the pictures with the right recipe.
  * @author user
  */
+
+import java.io.File;
 /*
 Find the way to actually rename the picture.
 */
@@ -31,12 +33,16 @@ public class Picture {
         return this.name;
     }
     
-    public void setName(String titleRecipe){
+    public void setName(String titleRecipe, File picture){
         /*
         Renames the picture to the title of the recipe .jpg to associate the 
         picture to the recipe.
         */
+        
         this.name = "\\"+titleRecipe+".jpg";
+        File pictureRenamed = new File(this.URI+this.name);
+        picture.renameTo(pictureRenamed);
+        
     }
     
     public String getPictureFullURI(){

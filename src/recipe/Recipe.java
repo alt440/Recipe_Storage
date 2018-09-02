@@ -17,11 +17,7 @@ public class Recipe implements RecipeInterface{
     private Picture recipePicture;
     private Instructions instructions;
     private Summary summary;
-<<<<<<< HEAD
-    private LinkedList<Ingredient> ingredients;
-=======
     private LinkedList<Ingredient> ingredients = new LinkedList<>();
->>>>>>> recipeBuilder
     
     public Recipe(){
         recipePicture = new Picture();
@@ -45,32 +41,14 @@ public class Recipe implements RecipeInterface{
         return instructions;
     }
     
-<<<<<<< HEAD
-=======
     public void clearRecipeInstructions(){
         instructions.clearInstructions();
     }
     
->>>>>>> recipeBuilder
     public Summary getRecipeSummary(){
         return summary;
     }
     
-<<<<<<< HEAD
-    public LinkedList<Ingredient> getIngredients(){
-        return ingredients;
-    }
-    
-    /*
-    need to check validity of number
-    */
-    public void removeIngredient(int number) throws InvalidIndex{
-        if(number < 1){
-            throw new InvalidIndex();
-        }
-        
-        ingredients.remove(number-1);
-=======
     public void clearRecipeSummary(){
         summary.clearSummary();
     }
@@ -104,6 +82,5 @@ public class Recipe implements RecipeInterface{
         
         return "Title: "+title+"\n\n"+recipePicture.toString()+"\n"+summary.toString()+
                 instructions.toString()+"\nIngredients: \n"+allIngredients;
->>>>>>> recipeBuilder
     }
 }

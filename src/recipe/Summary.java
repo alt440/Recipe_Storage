@@ -21,11 +21,6 @@ public class Summary {
     public void modifySummary(LinkedList<String> newSummary){
         this.summary = newSummary;
     }
-<<<<<<< HEAD
-    
-    public LinkedList<String> getSummary(){
-        return this.summary;
-=======
     
     public LinkedList<String> getSummary(){
         return this.summary;
@@ -44,6 +39,5 @@ public class Summary {
             return "Summary: No Summary";
         
         return "Summary: \n"+allSummary+"\n";
->>>>>>> recipeBuilder
     }
 }

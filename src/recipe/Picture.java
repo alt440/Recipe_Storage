@@ -18,12 +18,8 @@ Find the way to actually rename the picture.
 */
 public class Picture {
     
-<<<<<<< HEAD
-    private String URI;//the URI includes the name of the file and its extension
-=======
     private String URI = ".\\src\\recipe_storage\\Pictures";//the URI includes the name of the file and its extension
     private String name = "";
->>>>>>> recipeBuilder
     
     public String getPictureURI(){
         return this.URI;
@@ -33,21 +29,15 @@ public class Picture {
         this.URI = URI;
     }
     
-<<<<<<< HEAD
-    public void renamePicture(String titleRecipe){
-=======
     public String getName(){
         return this.name;
     }
     
     public void setName(String titleRecipe, File picture){
->>>>>>> recipeBuilder
         /*
         Renames the picture to the title of the recipe .jpg to associate the 
         picture to the recipe.
         */
-<<<<<<< HEAD
-=======
         
         this.name = "\\"+titleRecipe+".jpg";
         File pictureRenamed = new File(this.URI+this.name);
@@ -61,6 +51,5 @@ public class Picture {
     
     public String toString(){
         return "Picture full URI: "+URI+name+"\n";
->>>>>>> recipeBuilder
     }
 }

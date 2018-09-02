@@ -1,5 +1,1 @@
-<<<<<<< HEAD
-abc 9
-=======
 abc 3
->>>>>>> recipeBuilder

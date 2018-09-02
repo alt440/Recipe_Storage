@@ -7,3 +7,6 @@ ingredients, and instructions.
 I think about storing recipes as JSON objects to get used to JSON.
 It would be good to look at design patterns to get used to them. I have already
 used the singleton in AllIngredients and FridgeIngredients classes.
+
+Use the Java Security Manager to apply security restrictions.
+Will have to make each title of recipe unique so that there are no conflicting recipe objects. 

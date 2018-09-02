@@ -12,23 +12,39 @@ package recipe_storage;
  */
 import java.util.LinkedList;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class test {
     
     public static void main(String[] args){
         
-        LinkedList<String> ingredientsFridge = FridgeIngredients.getIngredientsInFridge();
-        System.out.println(ingredientsFridge.size());
+        
         
         try{
-        LinkedList<String> ingredients = AllIngredients.getIngredients();
-        for(int i=0;i<ingredients.size();i++)
-            System.out.println(ingredients.get(i));
+            
+            LinkedList<String> ingredientsFridge = FridgeIngredients.getIngredientsInFridge();
+            System.out.println(ingredientsFridge.size());
+            AllIngredients.addIngredient("abc");
+            FridgeIngredients.addToFridge("abc", 3);
+            LinkedList<String> ingredients = AllIngredients.getIngredients();
+            for(int i=0;i<ingredients.size();i++)
+                System.out.println(ingredients.get(i));
+            FridgeIngredients.putIngredientsInFile();
+            AllIngredients.putIngredientsInFile();
         }
         catch(FileNotFoundException ex){
             System.out.println("File not found");
+            ex.printStackTrace();
         }
-        
+        catch(InvalidQuantity ex){
+            ex.printStackTrace();
+        }
+        catch(InvalidIngredient ex){
+            ex.printStackTrace();
+        }
+        catch(IOException ex){
+            ex.printStackTrace();
+        }
         
     }
 }

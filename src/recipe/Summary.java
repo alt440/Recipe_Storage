@@ -21,8 +21,29 @@ public class Summary {
     public void modifySummary(LinkedList<String> newSummary){
         this.summary = newSummary;
     }
+<<<<<<< HEAD
     
     public LinkedList<String> getSummary(){
         return this.summary;
+=======
+    
+    public LinkedList<String> getSummary(){
+        return this.summary;
+    }
+    
+    public void clearSummary(){
+        summary.clear();
+    }
+    
+    public String toString(){
+        String allSummary = "";
+        for (int i=0;i<summary.size();i++){
+            allSummary+= summary.get(i)+"\n";
+        }
+        if(summary.size()==0)
+            return "Summary: No Summary";
+        
+        return "Summary: \n"+allSummary+"\n";
+>>>>>>> recipeBuilder
     }
 }

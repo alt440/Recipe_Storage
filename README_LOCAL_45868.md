@@ -1,20 +1,11 @@
 # Recipe_Storage
 Tool to store recipes and search for recipes having particular ingredients
 
-<<<<<<< HEAD
 This project has the purpose to make me practice the common design patterns as well as the use of JSON.
 
 # License
 
 The Gson software does not belong to me. Here is the license pertaining to the Gson software copied from Gson's Github page.
-=======
-This project has the purpose to make me practice the common design patterns as well as the use of JSON and the Java Security Manager.
-I have noticed that serialization may not be the best thing to do because many security issues arise. I will have to find a way around it.
-
-# License
-
-The Gson software does not belong to me. Below is the license pertaining to the Gson software, copied from the Gson's Github page.
->>>>>>> recipeBuilder
 
 "Gson is released under the Apache 2.0 license.
 

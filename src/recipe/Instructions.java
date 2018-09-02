@@ -22,29 +22,86 @@ public class Instructions {
     private LinkedList<String> instructions = new LinkedList<>();
     
     
+<<<<<<< HEAD
     public void addInstruction(String instruction){
         instructions.add(instruction);
     }
     
     public String getInstruction(int number) throws InvalidIndex{
         if(number<1)
+=======
+    public void addInstruction(int number, String instruction)throws InvalidIndex{
+        //we also include instructions.size()+1 as upper bound in case the 
+        //instruction is added at the end of the list.
+        if(number < 1 || number > instructions.size()+1)
+            throw new InvalidIndex();
+        
+        if(number !=instructions.size()+1){
+            String instructionAtNumber = instructions.get(number-1);
+            instructions.set(number-1, instruction);
+        
+            //pushing the next instructions down
+            for(int i=number; i< instructions.size();i++){
+                String nextInstruction = instructions.get(i);
+                instructions.set(i, instructionAtNumber);
+                instructionAtNumber = nextInstruction;   
+            }
+        }
+        
+        else{
+            instructions.add(instruction);
+        }
+    }
+    
+    public String getInstruction(int number) throws InvalidIndex{
+        if(number<1 || number > instructions.size())
+>>>>>>> recipeBuilder
             throw new InvalidIndex();
         
         return instructions.get(number-1); //because instructions start at 1, and linked list start at 0
     }
     
     public void modifyInstruction(int number, String instruction) throws InvalidIndex{
+<<<<<<< HEAD
         if(number < 1)
+=======
+        if(number < 1 || number > instructions.size())
+>>>>>>> recipeBuilder
             throw new InvalidIndex();
         
         instructions.set(number-1, instruction);
     }
     
     public void removeInstruction(int number) throws InvalidIndex{
+<<<<<<< HEAD
         if(number < 1)
+=======
+        if(number < 1 || number > instructions.size())
+>>>>>>> recipeBuilder
             throw new InvalidIndex();
         
         instructions.remove(number-1);
     }
+<<<<<<< HEAD
+=======
     
+    public LinkedList<String> getInstructions(){
+        return instructions;
+    }
+    
+    public void clearInstructions(){
+        instructions.clear();
+    }
+>>>>>>> recipeBuilder
+    
+    public String toString(){
+        String allInstructions = "";
+        for(int i=0;i< instructions.size();i++){
+            allInstructions+=i+". "+instructions.get(i)+"\n";
+        }
+        if(instructions.size()==0)
+            return "Instructions: No instructions.\n";
+        
+        return "Instructions: \n"+allInstructions;
+    }
 }

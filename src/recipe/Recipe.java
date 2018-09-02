@@ -17,7 +17,11 @@ public class Recipe implements RecipeInterface{
     private Picture recipePicture;
     private Instructions instructions;
     private Summary summary;
+<<<<<<< HEAD
     private LinkedList<Ingredient> ingredients;
+=======
+    private LinkedList<Ingredient> ingredients = new LinkedList<>();
+>>>>>>> recipeBuilder
     
     public Recipe(){
         recipePicture = new Picture();
@@ -41,10 +45,18 @@ public class Recipe implements RecipeInterface{
         return instructions;
     }
     
+<<<<<<< HEAD
+=======
+    public void clearRecipeInstructions(){
+        instructions.clearInstructions();
+    }
+    
+>>>>>>> recipeBuilder
     public Summary getRecipeSummary(){
         return summary;
     }
     
+<<<<<<< HEAD
     public LinkedList<Ingredient> getIngredients(){
         return ingredients;
     }
@@ -58,5 +70,40 @@ public class Recipe implements RecipeInterface{
         }
         
         ingredients.remove(number-1);
+=======
+    public void clearRecipeSummary(){
+        summary.clearSummary();
+    }
+    
+    public LinkedList<Ingredient> getIngredients(){
+        return ingredients;
+    }
+    
+    public void clearIngredients(){
+        ingredients.clear();
+    }
+    
+    /*
+    need to check validity of number
+    */
+    public void removeIngredient(int number) throws InvalidIndex{
+        if(number < 1 || number > ingredients.size()){
+            throw new InvalidIndex();
+        }
+        
+        ingredients.remove(number-1);
+    }
+    
+    public String toString(){
+        String allIngredients = "";
+        for (int i=0;i<ingredients.size();i++){
+            allIngredients+=ingredients.get(i).toString();
+        }
+        if(ingredients.size()==0)
+            allIngredients = "No ingredients";
+        
+        return "Title: "+title+"\n\n"+recipePicture.toString()+"\n"+summary.toString()+
+                instructions.toString()+"\nIngredients: \n"+allIngredients;
+>>>>>>> recipeBuilder
     }
 }

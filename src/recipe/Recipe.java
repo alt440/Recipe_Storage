@@ -18,6 +18,7 @@ public class Recipe implements RecipeInterface{
     private Instructions instructions;
     private Summary summary;
     private LinkedList<Ingredient> ingredients = new LinkedList<>();
+    private int rating = 10; //set the default rating of 10/10
     
     public Recipe(){
         recipePicture = new Picture();
@@ -31,6 +32,10 @@ public class Recipe implements RecipeInterface{
     
     public String getTitle(){
         return this.title;
+    }
+    
+    public int getRating(){
+        return this.rating;
     }
     
     public Picture getRecipePicture(){
@@ -70,6 +75,10 @@ public class Recipe implements RecipeInterface{
         }
         
         ingredients.remove(number-1);
+    }
+    
+    public void setRating(int ratingGiven){
+        this.rating = ratingGiven;
     }
     
     public String toString(){

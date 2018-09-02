@@ -35,6 +35,14 @@ public class RecipeBuilder {
         return recipeToBuild.getTitle();
     }
     
+    public int getRating(){
+        return recipeToBuild.getRating();
+    }
+    
+    public void setRating(int rating){
+        recipeToBuild.setRating(rating);
+    }
+    
     public void addSummary(LinkedList<String> summary){
         recipeToBuild.getRecipeSummary().modifySummary(summary);
     }
@@ -145,6 +153,9 @@ public class RecipeBuilder {
         this.recipeToBuild.clearRecipeSummary();
         
         this.addSummary(recipe.getRecipeSummary().getSummary());
+        
+        //Rating
+        this.recipeToBuild.setRating(recipe.getRating());
         
         return recipeToBuild;
     }

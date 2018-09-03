@@ -25,7 +25,7 @@ To increase efficiency, could make one copy of both linkedlists so
 that when comes time to save the list of ingredients it only saves 
 those that are not in both lists.
 */
-public class FridgeIngredients extends AllIngredients{
+public class FridgeIngredients{
     //lets make it simple for now. a to z
     private static LinkedList<String> ingredientsInFridge;
     private static LinkedList<Integer> ingredientsQuantitiesInFridge;

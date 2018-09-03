@@ -30,7 +30,7 @@ public class AllIngredients {
     
     private static LinkedList<String> listIngredients;
     
-    protected AllIngredients(){
+    private AllIngredients(){
         
     }
     

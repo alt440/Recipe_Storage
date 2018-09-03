@@ -23,6 +23,14 @@ access the data fields methods of each object of the recipe class.
 public class RecipeBuilder {
     private Recipe recipeToBuild = new Recipe();
     
+    public RecipeBuilder(){
+        
+    }
+    
+    public RecipeBuilder(String title){
+        recipeToBuild.setTitle(title);
+    }
+    
     public Recipe getRecipe(){
         return recipeToBuild;
     }
@@ -126,7 +134,7 @@ public class RecipeBuilder {
     /*
     Making a deep copy of the Recipe object received from JSON.
     */
-    public Recipe readRecipeJson() throws FileNotFoundException, InvalidIndex{
+    public RecipeBuilder readRecipeJson() throws FileNotFoundException, InvalidIndex{
         Recipe recipe = JSONBuild.readJSON(this.getTitle());
         
         //Ingredients
@@ -157,7 +165,7 @@ public class RecipeBuilder {
         //Rating
         this.recipeToBuild.setRating(recipe.getRating());
         
-        return recipeToBuild;
+        return this;
     }
     
     public String toString(){

@@ -69,11 +69,16 @@ public class JSONBuild {
       writer.close(); 
       
    }  
+    
+   /*
+    We do not add the extension at the end of the string of filereader because
+    this method is only used when we give the file.getName() string as parameter.
+    */ 
    public static Recipe readJSON(String recipeName) throws FileNotFoundException { 
       GsonBuilder builder = new GsonBuilder(); 
       Gson gson = builder.create(); 
       BufferedReader bufferedReader = new BufferedReader(
-         new FileReader(pathToJson+recipeName+".json"));   
+         new FileReader(pathToJson+recipeName));   
       
       Recipe recipe = gson.fromJson(bufferedReader, Recipe.class); 
       return recipe; 

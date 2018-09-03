@@ -33,11 +33,11 @@ public class FillingIngredientList extends Thread {
         }
     }
     
-    /*public static LinkedList<String> getListIngredients(){
+    public static LinkedList<String> getListIngredients(){
         return listIngredients;
     }
     
     public static LinkedList<String> getListIngredientsInFridge(){
         return listFridgeIngredients;
-    }*/
+    }
 }

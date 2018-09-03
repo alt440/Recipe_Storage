@@ -28,10 +28,15 @@ import javafx.scene.control.Button;
 import javafx.animation.Timeline;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
+import java.util.ArrayList;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.layout.Pane;
 
 import recipe.RecipeBuilder;
 import recipe_storage.AllIngredients;
-
+/*
+TEXT NOT CLICKABLE!
+*/
 /**
  *
  * @author user
@@ -40,7 +45,11 @@ public class EntryPage extends Application{
     private static Stage logoStage;
     private static Stage officialStage;
     private static LinkedList<RecipeBuilder> recipes;
-    
+    private static String[] suggestions = new String[5];//give 5 suggestions to what user types
+    private static Rectangle[] suggestionRect = new Rectangle[5];
+    private static StackPane[] rect_textPanes = new StackPane[5];
+    private static Text[] suggestionTexts = new Text[5];
+    private static VBox suggestionRectangles = new VBox(0);
     
     public static void main(String[] args) {
         launch(args);
@@ -49,6 +58,7 @@ public class EntryPage extends Application{
     @Override
     public void start(Stage primaryStage) {    
         
+        //define the logo stage
         StackPane root = new StackPane();
         /*
         Making the StackPane transparent
@@ -65,6 +75,7 @@ public class EntryPage extends Application{
         ImageView logoShow = new ImageView(logo);
         
         logoShow.setFitWidth(300);
+        //to preserve the same crisp image even if the image is resized
         logoShow.setPreserveRatio(true);
         logoShow.setSmooth(true);
         logoShow.setCache(true);
@@ -85,19 +96,92 @@ public class EntryPage extends Application{
         VBox someVBox = new VBox(10);
         someVBox.setAlignment(Pos.CENTER);
         
+        
         Text enterInfo = new Text("Enter the ingredients below:");
         TextField ingredientsEntered = new TextField();
+        
+        ingredientsEntered.textProperty().addListener((obs, oldVal, newVal) -> {
+            //take newVal to search for ingredients related to what is typed
+            //empty the VBox of suggestions first
+            suggestionRectangles.getChildren().clear();
+            
+            /*
+            Look for possibilities. If none, the VBox is not visible.
+            Otherwise, it is visible and shows the number of results, up to 5.
+            */
+            System.out.println("NEW VAL: "+newVal);
+            System.out.println("OLD VAL: "+oldVal);
+            if(!AllIngredients.getIngredientBeginningWith(newVal).isEmpty() &&!newVal.equals("")){
+                ArrayList<String> suggests = AllIngredients.getIngredientBeginningWith(newVal);
+                
+                /*
+                Text suggestions under the textfield. Show only if input in textfield.
+                If user clicks elsewhere they are removed (setVisible(false)).
+                */
+                
+                for(int i=0;i<suggests.size();i++){
+                    if(i<=4){
+                        suggestions[i]=suggests.get(i);
+                        System.out.println(suggestions[i]);
+                        //code to create the rectangles
+                        rect_textPanes[i] = new StackPane();
+                        rect_textPanes[i].setLayoutX(ingredientsEntered.getLayoutX());
+                        rect_textPanes[i].setLayoutY(ingredientsEntered.getLayoutY());
+                        suggestionTexts[i] = new Text(suggestions[i]);
+                        
+                        //this method allows the mouse click to work even if over text
+                        suggestionTexts[i].setMouseTransparent(true);
+            
+                        suggestionRect[i]= new Rectangle(ingredientsEntered.getWidth(), ingredientsEntered.getHeight());
+                        suggestionRect[i].setFill(Color.WHITE);
+                        
+                        
+                        rect_textPanes[i].getChildren().add(suggestionRect[i]);
+                        rect_textPanes[i].getChildren().add(suggestionTexts[i]);
+                        final String suggestionContent = suggestions[i];
+                        suggestionRect[i].setOnMouseClicked(e->{
+                            ingredientsEntered.setText(suggestionContent);
+                            suggestionRectangles.setVisible(false);
+                        });
+                        /*
+                        BUG: TEXT NOT CLICKABLE!!!
+                        */
+                        suggestionRectangles.getChildren().add(rect_textPanes[i]);
+                    }
+                    else{
+                        break;
+                    }
+                }
+                suggestionRectangles.setVisible(true);
+            }
+            else{
+                suggestionRectangles.setVisible(false);
+            }
+        });
+        
+        //to control position of the suggestions (VBox controls children position)
+        Pane surroundSuggestions = new Pane();
+        surroundSuggestions.getChildren().add(suggestionRectangles);
+        surroundSuggestions.setLayoutX(ingredientsEntered.getLayoutX());
+        surroundSuggestions.setLayoutY(ingredientsEntered.getLayoutY()+10);
+        
+        VBox ingredientsSuggest_TextField = new VBox(0);
+        ingredientsSuggest_TextField.getChildren().add(ingredientsEntered);
+        ingredientsSuggest_TextField.getChildren().add(surroundSuggestions);
+        
         
         HBox takingInput = new HBox(10);
         Button addIngredient = new Button("Add Ingredient");
         addIngredient.setOnAction(e->{
             addIngredientEvent(ingredientsEntered.getText());
         });
-        takingInput.getChildren().add(ingredientsEntered);
+        
+        takingInput.getChildren().add(ingredientsSuggest_TextField);
         takingInput.getChildren().add(addIngredient);
         
         someVBox.getChildren().add(enterInfo);
         someVBox.getChildren().add(takingInput);
+        someVBox.getChildren().add(suggestionRectangles);
         Scene officialScene = new Scene(someVBox, 400, 400);
         
         //showing the logo (it works!!)
@@ -130,9 +214,10 @@ public class EntryPage extends Application{
         officialStage.show();
     }
     
-    private static void addIngredientEvent(String input){
+    private static String addIngredientEvent(String input){
         if(!AllIngredients.getIngredientBeginningWith(input).isEmpty()){
             //add the ingredient to the list of results
+            return AllIngredients.getIngredientBeginningWith(input).get(0);
         }
         else{
             //show message of error
@@ -154,6 +239,7 @@ public class EntryPage extends Application{
             timeline.setOnFinished((ae) -> messageError.close()); 
             timeline.play();
             messageError.show();
+            return "";
         }
     }
 }

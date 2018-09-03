@@ -24,3 +24,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 "
+
+The logo has not been made all by me. I have used logomakr.com to build my logo.
+
+License Use of logomakr.com
+
+Permission is granted to download User copy of the materials that User designed on LogoMakr’s web site for personal and commercial use. Users may not download graphics as icons. Additional materials such as text must be added to graphics in order to legally use the logo designed on our platform. This license shall automatically terminate if you violate any of these restrictions and may be terminated by LogoMakr at any time. Upon terminating your viewing of these materials or upon the termination of this license, you must destroy any downloaded materials in your possession whether in electronic or printed format.

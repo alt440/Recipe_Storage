@@ -6,7 +6,9 @@
 package recipe;
 
 /**
- *
+ * JSONBuild class allows to read and write JSON
+ * objects, used especially for the reading and writing
+ * of recipes.
  * @author user
  */
 import java.io.IOException;
@@ -39,6 +41,12 @@ public class JSONBuild {
     to be written is Json is unique to avoid any conflict with resources of a 
     different recipe.
     */
+    /**
+     * Determines if the title is unique to make sure there is no
+     * conflict between a recipe's resources and another's.
+     * @param title The title that is going to be identified to be valid or not.
+     * @return Whether the title is valid or not.
+     */
     private static boolean isTitleValid(String title) {
         File folder = new File(folderOfJson);
         System.out.println("IS FOLDER DIRECTORY? "+folder.isDirectory());
@@ -50,6 +58,13 @@ public class JSONBuild {
         return true;
     }
     
+    /**
+     * Writes a recipe object into a JSON object.
+     * @param recipe The recipe object that is going to be put into JSON
+     * @throws IOException
+     * @throws EmptyTitleException If the recipe has no title, exception thrown.
+     * @throws UniqueTitleException If the recipe has a title common to another recipe, exception thrown.
+     */
     public static void writeJSON(Recipe recipe) throws IOException, EmptyTitleException, UniqueTitleException { 
       
       /*
@@ -74,7 +89,13 @@ public class JSONBuild {
     We do not add the extension at the end of the string of filereader because
     this method is only used when we give the file.getName() string as parameter.
     */ 
-   public static Recipe readJSON(String recipeName) throws FileNotFoundException { 
+    /**
+     * Reads a JSON object that represents a recipe object.
+     * @param recipeName A string representing the recipe's title to read the recipe.
+     * @return The recipe object with the same name as the recipe.
+     * @throws FileNotFoundException If the file is not found, exception thrown.
+     */
+    public static Recipe readJSON(String recipeName) throws FileNotFoundException { 
       GsonBuilder builder = new GsonBuilder(); 
       Gson gson = builder.create(); 
       BufferedReader bufferedReader = new BufferedReader(

@@ -6,7 +6,7 @@
 package recipe;
 
 /**
- *
+ * UniqueTitleException thrown when another recipe already holds the new recipe's title.
  * @author user
  */
 public class UniqueTitleException extends Exception{

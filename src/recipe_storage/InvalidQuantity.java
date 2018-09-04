@@ -8,7 +8,8 @@ package recipe_storage;
 
 /**
  * InvalidQuantity exception is thrown when a quantity of zero or less or another
- * invalid quantity is being asked to be put into the fridge.
+ * invalid quantity is being asked to be put into the fridge. It just prints an
+ * error message once a new object is made.
  * @author user
  */
 public class InvalidQuantity extends Exception{

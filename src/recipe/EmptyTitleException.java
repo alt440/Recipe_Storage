@@ -6,7 +6,10 @@
 package recipe;
 
 /**
- *
+ * The EmptyTitleException is thrown when there is no title
+ * given to the recipe, which would result in pictures with 
+ * no name, and possible conflict between two recipes with
+ * no title.
  * @author user
  */
 public class EmptyTitleException extends Exception{

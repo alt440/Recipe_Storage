@@ -30,13 +30,12 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import java.util.ArrayList;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.FlowPane;
+import javafx.geometry.Insets;
 
 import recipe.RecipeBuilder;
 import recipe_storage.AllIngredients;
-/*
-TEXT NOT CLICKABLE!
-*/
+
 /**
  *
  * @author user
@@ -50,6 +49,9 @@ public class EntryPage extends Application{
     private static StackPane[] rect_textPanes = new StackPane[5];
     private static Text[] suggestionTexts = new Text[5];
     private static VBox suggestionRectangles = new VBox(0);
+    private static LinkedList<IngredientSearchedObject> ingredientObjects = new LinkedList<>();
+    private static FlowPane ingredientsInSearch;
+    
     
     public static void main(String[] args) {
         launch(args);
@@ -94,7 +96,7 @@ public class EntryPage extends Application{
         //define the official stage
         officialStage = new Stage();
         VBox someVBox = new VBox(10);
-        someVBox.setAlignment(Pos.CENTER);
+        //someVBox.setAlignment(Pos.CENTER);
         
         
         Text enterInfo = new Text("Enter the ingredients below:");
@@ -125,8 +127,7 @@ public class EntryPage extends Application{
                         System.out.println(suggestions[i]);
                         //code to create the rectangles
                         rect_textPanes[i] = new StackPane();
-                        rect_textPanes[i].setLayoutX(ingredientsEntered.getLayoutX());
-                        rect_textPanes[i].setLayoutY(ingredientsEntered.getLayoutY());
+                        
                         suggestionTexts[i] = new Text(suggestions[i]);
                         
                         //this method allows the mouse click to work even if over text
@@ -143,9 +144,7 @@ public class EntryPage extends Application{
                             ingredientsEntered.setText(suggestionContent);
                             suggestionRectangles.setVisible(false);
                         });
-                        /*
-                        BUG: TEXT NOT CLICKABLE!!!
-                        */
+
                         suggestionRectangles.getChildren().add(rect_textPanes[i]);
                     }
                     else{
@@ -159,21 +158,40 @@ public class EntryPage extends Application{
             }
         });
         
-        //to control position of the suggestions (VBox controls children position)
-        Pane surroundSuggestions = new Pane();
-        surroundSuggestions.getChildren().add(suggestionRectangles);
-        surroundSuggestions.setLayoutX(ingredientsEntered.getLayoutX());
-        surroundSuggestions.setLayoutY(ingredientsEntered.getLayoutY()+10);
-        
         VBox ingredientsSuggest_TextField = new VBox(0);
         ingredientsSuggest_TextField.getChildren().add(ingredientsEntered);
-        ingredientsSuggest_TextField.getChildren().add(surroundSuggestions);
+        ingredientsSuggest_TextField.getChildren().add(suggestionRectangles);
+        
+        //hard coding the position of the suggestion rectangles
+        suggestionRectangles.setTranslateX(-52);
+        suggestionRectangles.setTranslateY(-10);
+        
+        //To keep track of all the ingredients that are going to be in the search
+        ingredientsInSearch = new FlowPane();
+        
+        //To be able to click on its objects
+        ingredientsInSearch.setMouseTransparent(true);
+        
+        ingredientsInSearch.setPadding(new Insets(10, 10, 10, 10));
+        ingredientsInSearch.setVgap(4);
+        ingredientsInSearch.setHgap(4);
+        ingredientsInSearch.setPrefWrapLength(210);
+        
+        //so the flowpane does not get displaced by the textfield options
+        //ingredientsInSearch.setTranslateY(160);
         
         
+        
+        //All the input into one pane
         HBox takingInput = new HBox(10);
+        takingInput.setAlignment(Pos.CENTER);
         Button addIngredient = new Button("Add Ingredient");
         addIngredient.setOnAction(e->{
-            addIngredientEvent(ingredientsEntered.getText());
+            String element = addIngredientEvent(ingredientsEntered.getText());
+            if(!element.equals("")){
+                ingredientObjects.add(new IngredientSearchedObject(element));
+                ingredientsInSearch.getChildren().add(ingredientObjects.getLast().getContainer());
+            }
         });
         
         takingInput.getChildren().add(ingredientsSuggest_TextField);
@@ -182,6 +200,7 @@ public class EntryPage extends Application{
         someVBox.getChildren().add(enterInfo);
         someVBox.getChildren().add(takingInput);
         someVBox.getChildren().add(suggestionRectangles);
+        someVBox.getChildren().add(ingredientsInSearch);
         Scene officialScene = new Scene(someVBox, 400, 400);
         
         //showing the logo (it works!!)
@@ -241,5 +260,9 @@ public class EntryPage extends Application{
             messageError.show();
             return "";
         }
+    }
+    
+    public static FlowPane getIngredientsInSearchPane(){
+        return ingredientsInSearch;
     }
 }

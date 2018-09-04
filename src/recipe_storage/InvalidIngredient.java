@@ -7,7 +7,8 @@ package recipe_storage;
  */
 
 /**
- *
+ * InvalidIngredient exception is thrown when an ingredient not from the list of valid
+ * ingredients is being added to the fridge.
  * @author user
  */
 public class InvalidIngredient extends Exception{

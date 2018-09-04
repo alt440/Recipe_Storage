@@ -34,6 +34,7 @@ public class test {
         firstRecipe.addSummary(summary);
         
         firstRecipe.setTitle("The AB mix");
+        firstRecipe.setRating(8);
         
         //must add the emplacement of the picture
         firstRecipe.setNamePicture("The AB mix", new File(firstRecipe.getPictureURI()+"\\someImg.jpg"));

@@ -5,6 +5,8 @@
  */
 package gui;
 
+import threads.FillingIngredientList;
+import threads.GetRecipes;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -49,8 +51,24 @@ public class EntryPage extends Application{
     private static StackPane[] rect_textPanes = new StackPane[5];
     private static Text[] suggestionTexts = new Text[5];
     private static VBox suggestionRectangles = new VBox(0);
-    private static LinkedList<IngredientSearchedObject> ingredientObjects = new LinkedList<>();
+
+    //lists the ingredients added to search
     private static FlowPane ingredientsInSearch;
+    //keeps in note the number of ingredients put into search
+    private static int numberIngredientsAddedToSearch = 0;
+    
+    //the scene already built so it does not need to be rebuilt
+    private static Scene officialScene;
+    
+    //the official's page pane so that if its built it does not need to be rebuilt
+    private static StackPane officialPane;
+    
+    //the top bar object
+    private static HBox topBar;
+    
+    //the suggestion rectangles translation X_Y axis
+    private static double translateX = -53;
+    private static double translateY = 81;
     
     
     public static void main(String[] args) {
@@ -92,17 +110,111 @@ public class EntryPage extends Application{
         logoStage.initStyle(StageStyle.TRANSPARENT);
         logoStage.show();
         
+        //Initialize the top bar for further use
+        topBar = TopBar.getTopBar(1);
         
         //define the official stage
         officialStage = new Stage();
-        VBox someVBox = new VBox(10);
-        //someVBox.setAlignment(Pos.CENTER);
         
         
-        Text enterInfo = new Text("Enter the ingredients below:");
-        TextField ingredientsEntered = new TextField();
+        //showing the logo (it works!!)
+        officialStage.getIcons().add(new Image("file:recipe_hunter_logo.png"));
         
-        ingredientsEntered.textProperty().addListener((obs, oldVal, newVal) -> {
+        officialScene = new Scene(getOfficialScreenPane(), Constants.getWidthScene(), Constants.getHeightScene());
+        officialStage.setScene(officialScene);
+        officialStage.setTitle("Recipe Hunter 1.0");
+        
+        FillingIngredientList thread = new FillingIngredientList();
+        thread.start();
+        
+        GetRecipes recipeInit = new GetRecipes();
+        recipeInit.start();
+
+        //to transition from one scene to the other
+        PauseTransition delay = new PauseTransition(Duration.seconds(3));
+        delay.setOnFinished( event -> switchStages() );
+        delay.play();
+        
+        
+
+    }
+    
+    private static void switchStages(){
+        logoStage.close();
+        officialStage.show();
+    }
+    
+    private static String addIngredientEvent(String input){
+        if(!AllIngredients.getIngredientBeginningWith(input).isEmpty()){
+            //add the ingredient to the list of results
+            return AllIngredients.getIngredientBeginningWith(input).get(0);
+        }
+        else{
+            //show message of error
+            errorMessage("There are no ingredients\nthat match your input.");
+            return "";
+        }
+    }
+    
+    private static void errorMessage(String message){
+        //show message of error
+            Stage messageError = new Stage();
+            messageError.initStyle(StageStyle.TRANSPARENT);
+            HBox withText = new HBox(10);
+            Text textError = new Text(message);
+            withText.getChildren().add(textError);            
+            
+            Scene messageErrorScene = new Scene(withText, 200,40);
+            messageErrorScene.setFill(Color.TRANSPARENT);
+            messageError.setScene(messageErrorScene);
+            
+            //the animation of the error
+            Timeline timeline = new Timeline();
+            KeyFrame key = new KeyFrame(Duration.millis(2000),
+                           new KeyValue (messageError.getScene().getRoot().opacityProperty(), 0)); 
+            timeline.getKeyFrames().add(key);   
+            timeline.setOnFinished((ae) -> messageError.close()); 
+            timeline.play();
+            messageError.show();
+    }
+    
+    /**
+     * To access the Flowpane that lists the ingredients searched for. Used in the
+     * IngredientSearchedObject class.
+     * @return 
+     */
+    public static FlowPane getIngredientsInSearchPane(){
+        return ingredientsInSearch;
+    }
+    
+    /**
+     * Decreases the number of ingredients searched by one: happens when the 
+     * user decides to remove one ingredient searched for. Used in IngredientSearchedObject.
+     */
+    public static void decreaseNumberIngredientSearched(){
+        numberIngredientsAddedToSearch--;
+    }
+    
+    /**
+     * Gets the stage that is going to be used during the user's use of the program
+     * @return 
+     */
+    public static Stage getOfficialStage(){
+        return officialStage;
+    }
+    
+    /**
+     * This method builds the stage that is seen when the application launches.
+     * @return 
+     */
+    public static StackPane getOfficialScreenPane(){
+        if(officialPane == null){
+            VBox someVBox = new VBox(10);
+        
+            Text enterInfo = new Text("Enter the ingredients below:");
+            TextField ingredientsEntered = new TextField();
+        
+            ingredientsEntered.textProperty().addListener((obs, oldVal, newVal) -> {
             //take newVal to search for ingredients related to what is typed
             //empty the VBox of suggestions first
             suggestionRectangles.getChildren().clear();
@@ -121,6 +233,7 @@ public class EntryPage extends Application{
                 If user clicks elsewhere they are removed (setVisible(false)).
                 */
                 
+                //Do I have to put this on stackpane not to displace what is below?
                 for(int i=0;i<suggests.size();i++){
                     if(i<=4){
                         suggestions[i]=suggests.get(i);
@@ -145,124 +258,76 @@ public class EntryPage extends Application{
                             suggestionRectangles.setVisible(false);
                         });
 
-                        suggestionRectangles.getChildren().add(rect_textPanes[i]);
+                            suggestionRectangles.getChildren().add(rect_textPanes[i]);
+                        }
+                        else{
+                            break;
+                        }
                     }
-                    else{
-                        break;
-                    }
+                    suggestionRectangles.setVisible(true);
                 }
-                suggestionRectangles.setVisible(true);
-            }
-            else{
-                suggestionRectangles.setVisible(false);
-            }
-        });
+                else{
+                    suggestionRectangles.setVisible(false);
+                }
+            });
         
-        VBox ingredientsSuggest_TextField = new VBox(0);
-        ingredientsSuggest_TextField.getChildren().add(ingredientsEntered);
-        ingredientsSuggest_TextField.getChildren().add(suggestionRectangles);
-        
-        //hard coding the position of the suggestion rectangles
-        suggestionRectangles.setTranslateX(-52);
-        suggestionRectangles.setTranslateY(-10);
-        
-        //To keep track of all the ingredients that are going to be in the search
-        ingredientsInSearch = new FlowPane();
-        
-        //To be able to click on its objects
-        ingredientsInSearch.setMouseTransparent(true);
-        
-        ingredientsInSearch.setPadding(new Insets(10, 10, 10, 10));
-        ingredientsInSearch.setVgap(4);
-        ingredientsInSearch.setHgap(4);
-        ingredientsInSearch.setPrefWrapLength(210);
-        
-        //so the flowpane does not get displaced by the textfield options
-        //ingredientsInSearch.setTranslateY(160);
-        
-        
-        
-        //All the input into one pane
-        HBox takingInput = new HBox(10);
-        takingInput.setAlignment(Pos.CENTER);
-        Button addIngredient = new Button("Add Ingredient");
-        addIngredient.setOnAction(e->{
-            String element = addIngredientEvent(ingredientsEntered.getText());
-            if(!element.equals("")){
-                ingredientObjects.add(new IngredientSearchedObject(element));
-                ingredientsInSearch.getChildren().add(ingredientObjects.getLast().getContainer());
-            }
-        });
-        
-        takingInput.getChildren().add(ingredientsSuggest_TextField);
-        takingInput.getChildren().add(addIngredient);
-        
-        someVBox.getChildren().add(enterInfo);
-        someVBox.getChildren().add(takingInput);
-        someVBox.getChildren().add(suggestionRectangles);
-        someVBox.getChildren().add(ingredientsInSearch);
-        Scene officialScene = new Scene(someVBox, 400, 400);
-        
-        //showing the logo (it works!!)
-        officialStage.getIcons().add(new Image("file:recipe_hunter_logo.png"));
-        officialStage.setScene(officialScene);
-        officialStage.setTitle("Recipe Hunter 1.0");
-        
-        FillingIngredientList thread = new FillingIngredientList();
-        thread.start();
-        
-        GetRecipes recipeInit = new GetRecipes();
-        recipeInit.start();
-        
-        //grabbing the list of recipes
-        recipes = GetRecipes.recipes;
-        
-        //
-        
-        //to transition from one scene to the other
-        PauseTransition delay = new PauseTransition(Duration.seconds(3));
-        delay.setOnFinished( event -> switchStages() );
-        delay.play();
-        
-        
+            VBox ingredientsSuggest_TextField = new VBox(0);
+            ingredientsSuggest_TextField.getChildren().add(ingredientsEntered);
+            ingredientsSuggest_TextField.getChildren().add(suggestionRectangles);
 
-    }
-    
-    private static void switchStages(){
-        logoStage.close();
-        officialStage.show();
-    }
-    
-    private static String addIngredientEvent(String input){
-        if(!AllIngredients.getIngredientBeginningWith(input).isEmpty()){
-            //add the ingredient to the list of results
-            return AllIngredients.getIngredientBeginningWith(input).get(0);
+            //To keep track of all the ingredients that are going to be in the search
+            ingredientsInSearch = new FlowPane();
+        
+            ingredientsInSearch.setPadding(new Insets(10, 10, 10, 10));
+            ingredientsInSearch.setVgap(4);
+            ingredientsInSearch.setHgap(4);
+            ingredientsInSearch.setPrefWrapLength(210);
+        
+        
+            //All the input into one pane
+            //NEED TO ADD THE SEARCH BUTTON! PUT IT AS A MAGNIFIER ICON. MUST CREATE IT
+            HBox takingInput = new HBox(10);
+            takingInput.setAlignment(Pos.CENTER);
+            Button addIngredient = new Button("Add Ingredient");
+            addIngredient.setOnAction(e->{
+                String element = addIngredientEvent(ingredientsEntered.getText());
+                if(!element.equals("")&&numberIngredientsAddedToSearch<=16){
+                    IngredientSearchedObject a = new IngredientSearchedObject(element);
+                    ingredientsInSearch.getChildren().add(a.getContainer());
+                    numberIngredientsAddedToSearch++;
+                    ingredientsEntered.setText("");
+                }
+                else if(numberIngredientsAddedToSearch>16){
+                    errorMessage("There are too many\ningredients in your search.");
+                }
+            });
+        
+            takingInput.getChildren().add(ingredientsSuggest_TextField);
+            takingInput.getChildren().add(addIngredient);
+        
+            someVBox.getChildren().add(topBar);
+            someVBox.getChildren().add(enterInfo);
+            someVBox.getChildren().add(takingInput);
+            //someVBox.getChildren().add(suggestionRectangles);
+            someVBox.getChildren().add(ingredientsInSearch);
+        
+            //adding the suggestions on top of the general VBox
+            officialPane = new StackPane();
+            officialPane.getChildren().add(someVBox);
+            officialPane.getChildren().add(suggestionRectangles);
+        
+            //hard coding the position of the suggestion rectangles
+            suggestionRectangles.setTranslateX(translateX);
+            suggestionRectangles.setTranslateY(translateY);
         }
-        else{
-            //show message of error
-            Stage messageError = new Stage();
-            messageError.initStyle(StageStyle.TRANSPARENT);
-            HBox withText = new HBox(10);
-            Text textError = new Text("There are no ingredients\nthat match your input");
-            withText.getChildren().add(textError);            
-            
-            Scene messageErrorScene = new Scene(withText, 200,40);
-            messageErrorScene.setFill(Color.TRANSPARENT);
-            messageError.setScene(messageErrorScene);
-            
-            //the animation of the error
-            Timeline timeline = new Timeline();
-            KeyFrame key = new KeyFrame(Duration.millis(2000),
-                           new KeyValue (messageError.getScene().getRoot().opacityProperty(), 0)); 
-            timeline.getKeyFrames().add(key);   
-            timeline.setOnFinished((ae) -> messageError.close()); 
-            timeline.play();
-            messageError.show();
-            return "";
-        }
+            return officialPane;
     }
     
-    public static FlowPane getIngredientsInSearchPane(){
-        return ingredientsInSearch;
+    public static Scene getOfficialScene(){
+        return officialScene;
+    }
+    
+    public static void setOfficialScene(Scene abc){
+        officialScene = abc;
     }
 }

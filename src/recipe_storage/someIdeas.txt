@@ -10,3 +10,8 @@ used the singleton in AllIngredients and FridgeIngredients classes.
 
 Use the Java Security Manager to apply security restrictions.
 Will have to make each title of recipe unique so that there are no conflicting recipe objects. 
+
+Creating a part of it that manages the recipes for the whole week and
+gives a listing of all the ingredients that you need.
+Also you could search for the less expensive items in the "circulaire" by
+searching online for the "circulaire" of a company.

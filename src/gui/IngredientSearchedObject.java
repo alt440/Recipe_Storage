@@ -38,31 +38,43 @@ public class IngredientSearchedObject {
         HBox text_img = new HBox(5);
         nameIngredient.setText(nameIngredientString);
         
+        //name is a little above button
+        //nameIngredient.setTranslateY(5);
+        
         //to be able to click on it
         nameIngredient.setMouseTransparent(true);
         text_img.getChildren().add(nameIngredient);
         
+        //image is a little above button
+        xImage.setTranslateY(5);
         //to be able to click on it
         xImage.setMouseTransparent(true);
+        /*xImage.setOnMouseClicked(e->{
+            //send request to flowpane for deletion
+            System.out.println("REMOVED INGREDIENT!");
+            EntryPage.getIngredientsInSearchPane().getChildren().remove(this.container);
+            EntryPage.decreaseNumberIngredientSearched();
+        });*/
         text_img.getChildren().add(xImage);
         
-        System.out.println(xImage.getLayoutX());
-        buttonIngredient.setLayoutX(nameIngredient.getLayoutX()+xImage.getLayoutX()+105);
-        buttonIngredient.setLayoutY(nameIngredient.getLayoutY()+5);
+        buttonIngredient.setGraphic(text_img);
 
         container = new StackPane();
         
         //to be able to click on it
-        container.setMouseTransparent(true);
+        //container.setMouseTransparent(true);
+        /*container.setOnMouseClicked(e->{
+            System.out.println("REMOVED INGREDIENT!");
+        });*/
         
         container.getChildren().add(buttonIngredient);
         container.getChildren().add(text_img);
         
         buttonIngredient.setOnMouseClicked(e->{
             //send request to flowpane for deletion
-            System.out.println("REMOVED INGREDIENT!");
+            System.out.println("REMOVED INGREDIENT! @IngredientSearchedObject");
             EntryPage.getIngredientsInSearchPane().getChildren().remove(this.container);
-            
+            EntryPage.decreaseNumberIngredientSearched();
         });
     }
     

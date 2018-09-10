@@ -35,8 +35,8 @@ public class RecipeBuilder {
      * Constructor containing the title of the recipe as a parameter.
      * @param title Title of the recipe.
      */
-    public RecipeBuilder(String title){
-        recipeToBuild.setTitle(title);
+    public RecipeBuilder(String fileTitle){
+        recipeToBuild.setTitle(fileTitle.split("\\.")[0]);
     }
     
     /**
@@ -121,6 +121,22 @@ public class RecipeBuilder {
      */
     public void setNamePicture(String titleRecipe, File picture){
         recipeToBuild.getRecipePicture().setName(titleRecipe, picture);
+    }
+    
+    /**
+     * To get the name of the picture.
+     * @return name of picture
+     */
+    public String getNamePicture(){
+        return recipeToBuild.getRecipePicture().getName();
+    }
+    
+    /**
+     * Get the picture's file path and its full name with extension.
+     * @return Picture's location in computer.
+     */
+    public String getPictureFullURI(){
+        return recipeToBuild.getRecipePicture().getPictureFullURI();
     }
     
     /**
@@ -255,7 +271,7 @@ public class RecipeBuilder {
      * @throws InvalidIndex If the index is below 0 or greater than the size of the list.
      */
     public RecipeBuilder readRecipeJson() throws FileNotFoundException, InvalidIndex{
-        Recipe recipe = JSONBuild.readJSON(this.getTitle());
+        Recipe recipe = JSONBuild.readJSON(this.getTitle()+".json");
         
         //Ingredients
         this.recipeToBuild.clearIngredients();
